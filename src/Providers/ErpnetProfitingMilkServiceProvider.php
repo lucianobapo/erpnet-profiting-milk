@@ -83,6 +83,6 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
     
     private function getMigrationsPath()
     {
-        return $this->projectRootDir . 'migrations/';
+        return $this->projectRootDir . 'database/migrations/';
     }
 }
