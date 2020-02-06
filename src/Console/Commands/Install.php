@@ -15,7 +15,7 @@ class Install extends Command
      *
      * @var string
      */
-    protected $signature = 'erpnet:profiting-calendar:install
+    protected $signature = 'erpnet:profiting-milk:install
                                 {--timeout=300} : How many seconds to allow each process to run.
                                 {--debug} : Show process output or not. Useful for debugging.';
 
@@ -24,7 +24,7 @@ class Install extends Command
      *
      * @var string
      */
-    protected $description = 'ErpNET\ProfitingCalendar install and execute';
+    protected $description = 'ErpNET\Profiting\Milk install and execute';
 
     /**
      * Create a new command instance.
@@ -47,7 +47,7 @@ class Install extends Command
         //$this->info(" Backpack\Base installation started. Please wait...");
         $this->progressBar = $this->output->createProgressBar(14);
         $this->progressBar->start();
-        $this->info(" ErpNET\\ProfitingCalendar installation started. Please wait...");
+        $this->info(" ErpNET\\Profiting\\Milk installation started. Please wait...");
         $this->progressBar->advance();
 
         //step 1
@@ -81,7 +81,7 @@ class Install extends Command
 
         //step 14
         $this->progressBar->finish();
-        $this->info(" ErpNET\\ProfitingCalendar installation finished.");
+        $this->info(" ErpNET\\Profiting\\Milk installation finished.");
     }
 
     /**

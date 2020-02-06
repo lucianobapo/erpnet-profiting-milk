@@ -2,6 +2,12 @@
 Route::group(['middleware' => 'language'], function () {
 	Route::group(['middleware' => 'auth'], function () {
 
+	    Route::group(['middleware' => ['adminmenu', 'permission:read-admin-panel']], function () {
+	        Route::group(['prefix' => 'milk'], function () {
+	            Route::resource('production', 'Production', ['middleware' => ['dateformat', 'money']]);
+	            
+	        });
+	    });
 	});	
 
 	Route::group(['middleware' => 'guest'], function () {

@@ -45,6 +45,8 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
         //Routing
 //        include $routesDir."api.php";
         include $routesDir."web.php";
+        
+        $this->publishMigrations();
 
     }
 
@@ -69,5 +71,16 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
     public function provides()
     {
         return [];
+    }
+    
+    private function publishMigrations()
+    {
+        $path = $this->getMigrationsPath();
+        $this->publishes([$path => database_path('migrations')], 'migrations');
+    }
+    
+    private function getMigrationsPath()
+    {
+        return __DIR__ . '/../database/migrations/';
     }
 }
