@@ -9,6 +9,8 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
     protected $commands = [
         \ErpNET\Profiting\Milk\Console\Commands\Install::class,
     ];
+    
+    protected $projectRootDir;
 
     /**
      * Bootstrap the application services.
@@ -19,8 +21,8 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
     {
         $app = $this->app;
 
-        $projectRootDir = __DIR__.DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR;
-        $routesDir = $projectRootDir."routes".DIRECTORY_SEPARATOR;
+        $this->projectRootDir = __DIR__.DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR;
+        $routesDir = $this->projectRootDir."routes".DIRECTORY_SEPARATOR;
 
 //        $configPath = $projectRootDir . 'config/erpnetModels.php';
 //        $this->mergeConfigFrom($configPath, 'erpnetModels');
@@ -81,6 +83,6 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
     
     private function getMigrationsPath()
     {
-        return __DIR__ . '/../database/migrations/';
+        return $this->projectRootDir . 'migrations/';
     }
 }
