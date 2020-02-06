@@ -1,34 +1,35 @@
 {
-	"name" : "ilhanet/erpnet-profiting-calendar",
-	"license" : "MIT",
-	"version" : "0.0.1",
-	"authors" : [{
-			"name" : "Luciano Porto",
-			"email" : "luciano.bapo@gmail.com"
+	"name": "ilhanet/erpnet-profiting-milk",
+	"license": "MIT",
+	"version": "0.0.1",
+	"authors": [
+		{
+			"name": "Luciano Porto",
+			"email": "luciano.bapo@gmail.com"
 		}
 	],
-	"require" : {
-		"php" : "^7.1.3",
-		"illuminate/support" : ">=5"
+	"require": {
+		"php": "^7.1.3",
+		"illuminate/support": ">=5"
 	},
-	"autoload" : {
-		"psr-4" : {
-			"ErpNET\\ProfitingCalendar\\" : "src/"
+	"autoload": {
+		"psr-4": {
+			"ErpNET\\Profiting\\Milk\\" : "src/"
 		}
 	},
-	"autoload-dev" : {
-		"psr-4" : {
-			"ErpNET\\ProfitingCalendarTests\\" : "tests/"
+	"autoload-dev": {
+		"psr-4": {
+			"ErpNET\\Profiting\\Milk\\Tests\\" : "tests/"
 		}
 	},
-	"extra" : {
-		"laravel" : {
-			"providers" : [
-				"ErpNET\\ProfitingCalendar\\Providers\\ErpnetProfitingCalendarServiceProvider"
+	"extra": {
+		"laravel": {
+			"providers": [
+				"ErpNET\\Profiting\\Milk\\Providers\\ErpnetProfitingCalendarServiceProvider"
 			]
 		}
 	},
-	"support" : {
-		"email" : "luciano.bapo@gmail.com"
+	"support": {
+		"email": "luciano.bapo@gmail.com"
 	}
 }
