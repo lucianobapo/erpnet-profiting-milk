@@ -49,8 +49,10 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
         include $routesDir."web.php";
         
         $this->publishMigrations();
+        
         $this->listenEvents();
         
+        $this->registerTranslations();
 
     }
 
@@ -92,5 +94,19 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
     {
         $this->app['events']->listen(\App\Events\AdminMenuCreated::class, 
             \ErpNET\Profiting\Milk\Listeners\AdminMenu::class);
+    }
+    
+    /**
+     * Register translations.
+     *
+     * @return void
+     */
+    private function registerTranslations()
+    {
+        $langPath = $this->projectRootDir . 'resources/lang';
+        
+        if (is_dir($langPath)) {
+            $this->loadTranslationsFrom($langPath, 'erpnet-profiting-milk');
+        }
     }
 }
