@@ -53,6 +53,8 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
         $this->listenEvents();
         
         $this->registerTranslations();
+        
+        $this->registerViews();
 
     }
 
@@ -109,4 +111,26 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
             $this->loadTranslationsFrom($langPath, 'erpnet-profiting-milk');
         }
     }
+    
+    
+    /**
+     * Register views.
+     *
+     * @return void
+     */
+    private function registerViews()
+    {
+        $viewPath = resource_path('views/vendor/erpnet-profiting-milk');
+        
+        $sourcePath = $this->projectRootDir . 'resources/views';
+        
+        $this->publishes([
+            $sourcePath => $viewPath
+        ]);
+        
+        $this->loadViewsFrom(array_merge(array_map(function ($path) {
+            return $path . '/vendor/erpnet-profiting-milk';
+        }, \Config::get('view.paths')), [$sourcePath]), 'erpnet-profiting-milk');
+    }
+    
 }

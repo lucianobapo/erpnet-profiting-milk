@@ -1,5 +1,5 @@
 <?php
-Route::group(['middleware' => 'language'], function () {
+Route::group(['middleware' => 'web','language'], function () {
 	Route::group(['middleware' => 'auth'], function () {
 
 	    Route::group(['middleware' => ['adminmenu', 'permission:read-admin-panel']], function () {
