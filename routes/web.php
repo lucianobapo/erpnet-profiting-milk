@@ -1,7 +1,7 @@
 <?php
 Route::group(['middleware' => 'web','language'], function () {
+    
 	Route::group(['middleware' => 'auth'], function () {
-
 	    Route::group(['middleware' => ['adminmenu', 'permission:read-admin-panel']], function () {
 	        Route::group(['prefix' => 'milk', 'namespace'=>'\ErpNET\Profiting\Milk\Http\Controllers'], function () {
 	            Route::resource('production', 'Production', ['middleware' => ['dateformat', 'money']]);
@@ -9,9 +9,9 @@ Route::group(['middleware' => 'web','language'], function () {
 	        });
 	    });
 	});	
-
+	
+/*
 	Route::group(['middleware' => 'guest'], function () {
-
         Route::group(['prefix' => 'auth', 'namespace'=>'\ErpNET\ProfitingCalendar\Http\Controllers\Auth'], function () {
             //Route::get('login', 'Login@create')->name('login');
             //Route::post('login', 'Login@store');
@@ -25,4 +25,5 @@ Route::group(['middleware' => 'web','language'], function () {
         });
 
 	});	
+	*/
 });
