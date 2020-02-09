@@ -3,7 +3,6 @@
 namespace ErpNET\Profiting\Milk\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Composer\Script\Event;
 
 class ErpnetProfitingMilkServiceProvider extends ServiceProvider
 {
@@ -133,16 +132,5 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
             return $path . '/vendor/erpnet-profiting-milk';
         }, \Config::get('view.paths')), [$sourcePath]), 'erpnet-profiting-milk');
     }
-    
-    /**
-     * Handle the post-install Composer event.
-     *
-     * @param  \Composer\Script\Event  $event
-     * @return void
-     */
-    public static function postInstall(Event $event)
-    {
-        logger('chamou script');
-    }
-    
+        
 }

@@ -6,6 +6,9 @@ use Illuminate\Console\Command;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
+use App\Models\Auth\Role;
+use App\Models\Auth\Permission;
+
 class Install extends Command
 {
     protected $progressBar;
@@ -51,9 +54,10 @@ class Install extends Command
         $this->progressBar->advance();
 
         //step 1
-        //$this->line(' Installing Backpack\\Base');
-        //$this->executeProcess('php artisan backpack:base:install'.($this->option('debug')?' --debug':''));
-
+        $this->line(' Creating Permissions...');
+        $this->updatePermissions();
+        $this->progressBar->advance();
+        
         //step 2
         //$this->line(' Installing Backpack\\Crud');
         //$this->executeProcess('php artisan backpack:crud:install'.($this->option('debug')?' --debug':''));
@@ -140,5 +144,58 @@ class Install extends Command
             $this->{$type}($content);
         }
     }
+       
+    
+    protected function updatePermissions()
+    {
+        // Check if already exists
+        if ($p = Permission::where('name', 'read-inventory-item-groups')->value('id')) {
+            return;
+        }
+        
+        $permissions = [];
+        
+        // Item Groups
+        $permissions[] = Permission::firstOrCreate([
+            'name' => 'create-production',
+            'display_name' => 'Create Production',
+            'description' => 'Create Production',
+        ]);
+        
+        $permissions[] = Permission::firstOrCreate([
+            'name' => 'read-production',
+            'display_name' => 'Read Production',
+            'description' => 'Read Production',
+        ]);
+        
+        $permissions[] = Permission::firstOrCreate([
+            'name' => 'update-production',
+            'display_name' => 'Update Production',
+            'description' => 'Update Production',
+        ]);
+        
+        $permissions[] = Permission::firstOrCreate([
+            'name' => 'delete-production',
+            'display_name' => 'Delete Production',
+            'description' => 'Delete Production',
+        ]);
+       
+        
+        // Attach permission to roles
+        $roles = Role::all();
+        
+        foreach ($roles as $role) {
+            $allowed = ['admin', 'manager'];
+            
+            if (!in_array($role->name, $allowed)) {
+                continue;
+            }
+            
+            foreach ($permissions as $permission) {
+                $role->attachPermission($permission);
+            }
+        }
+    }
+    
 
 }
