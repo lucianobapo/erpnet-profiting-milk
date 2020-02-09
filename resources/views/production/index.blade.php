@@ -35,9 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
-              		@foreach($productions as $production)
-              			{{ $production->id }}
-              		@endforeach;
+              		
                 </tbody>
             </table>
         </div>
