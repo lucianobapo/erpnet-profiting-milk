@@ -23,14 +23,6 @@
 			"ErpNET\\Profiting\\Milk\\Tests\\" : "tests/"
 		}
 	},
-	"scripts" : {
-		"post-install-cmd" : [
-			"ErpNET\\Profiting\\Milk\\ErpnetProfitingMilkServiceProvider::postInstall"
-		],
-		"post-update-cmd" : [
-			"ErpNET\\Profiting\\Milk\\ErpnetProfitingMilkServiceProvider::postInstall"
-		]
-	},
 	"extra": {
 		"laravel": {
 			"providers": [
