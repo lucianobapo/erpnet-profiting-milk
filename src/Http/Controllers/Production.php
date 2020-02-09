@@ -25,10 +25,9 @@ class Production extends Controller
      */
     public function index()
     {
-        //dd('index controller');
         //$payments = Payment::with(['vendor', 'account', 'category'])->isNotTransfer()->collect(['paid_at'=> 'desc']);
         
-        //$vendors = collect(Vendor::enabled()->orderBy('name')->pluck('name', 'id'));
+        $vendors = collect(Vendor::enabled()->orderBy('name')->pluck('name', 'id'));
         
         //$categories = collect(Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id'));
         
@@ -36,8 +35,8 @@ class Production extends Controller
         
         //$transfer_cat_id = Category::transfer();
         
-        return view('erpnet-profiting-milk:production.index'//, 
-            //compact('payments', 'vendors', 'categories', 'accounts', 'transfer_cat_id')
+        return view('erpnet-profiting-milk::production.index',
+            compact('payments', 'vendors', 'categories', 'accounts', 'transfer_cat_id')
             );
     }
     
