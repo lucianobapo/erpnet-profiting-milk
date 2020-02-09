@@ -12,7 +12,7 @@ use App\Models\Auth\Permission;
 class Install extends Command
 {
     protected $progressBar;
-
+    
     /**
      * The name and signature of the console command.
      *
@@ -21,14 +21,14 @@ class Install extends Command
     protected $signature = 'erpnet:profiting-milk:install
                                 {--timeout=300} : How many seconds to allow each process to run.
                                 {--debug} : Show process output or not. Useful for debugging.';
-
+    
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'ErpNET\Profiting\Milk install and execute';
-
+    
     /**
      * Create a new command instance.
      *
@@ -38,7 +38,7 @@ class Install extends Command
     {
         parent::__construct();
     }
-
+    
     /**
      * Execute the console command.
      *
@@ -52,16 +52,16 @@ class Install extends Command
         $this->progressBar->start();
         $this->info(" ErpNET\\Profiting\\Milk installation started. Please wait...");
         $this->progressBar->advance();
-
+        
         //step 1
-        $this->line(' Creating Permissions...');
+        $this->line(' Creating Permissions......');
         $this->updatePermissions();
         $this->progressBar->advance();
         
         //step 2
         //$this->line(' Installing Backpack\\Crud');
         //$this->executeProcess('php artisan backpack:crud:install'.($this->option('debug')?' --debug':''));
-
+        
         //step 3
         //$this->line(' Installing Backpack\\Settings');
         $this->line(' Publishing Files...');
@@ -77,19 +77,19 @@ class Install extends Command
         //step 6
         $this->line(' Add menu...');
         //$this->executeProcess('php artisan backpack:base:add-sidebar-content "<li><a href=\'{{ url(config(\'backpack.base.route_prefix\', \'admin\') . \'/setting\') }}\'><i class=\'fa fa-cog\'></i> <span>Settings</span></a></li>"');
-
-
-
-
+        
+        
+        
+        
         //step 13
         //$this->line(' Installing ErpNET\\Permissions');
         //$this->executeProcess('php artisan erpnet:permissions:install');
-
+        
         //step 14
         $this->progressBar->finish();
         $this->info(" ErpNET\\Profiting\\Milk installation finished.");
     }
-
+    
     /**
      * Run a SSH command.
      *
@@ -102,7 +102,7 @@ class Install extends Command
     public function executeProcess($command, $beforeNotice = false, $afterNotice = false):void
     {
         $this->echo('info', $beforeNotice ? ' '.$beforeNotice : $command);
-
+        
         $process = new Process($command, null, null, null, $this->option('timeout'), null);
         $process->run(function ($type, $buffer) {
             if (Process::ERR === $type) {
@@ -111,22 +111,22 @@ class Install extends Command
                 $this->echo('line', $buffer);
             }
         });
-
-        // executes after the command finishes
-        if (!$process->isSuccessful()) {
-            $this->executeProcess('php artisan migrate:reset');
-            throw new ProcessFailedException($process);
-        }
-
-        if ($this->progressBar) {
-            $this->progressBar->advance();
-        }
-
-        if ($afterNotice) {
-            $this->echo('info', $afterNotice);
-        }
+            
+            // executes after the command finishes
+            if (!$process->isSuccessful()) {
+                $this->executeProcess('php artisan migrate:reset');
+                throw new ProcessFailedException($process);
+            }
+            
+            if ($this->progressBar) {
+                $this->progressBar->advance();
+            }
+            
+            if ($afterNotice) {
+                $this->echo('info', $afterNotice);
+            }
     }
-
+    
     /**
      * Write text to the screen for the user to see.
      *
@@ -138,18 +138,20 @@ class Install extends Command
         if ($this->option('debug') == false) {
             return;
         }
-
+        
         // skip empty lines
         if (trim($content)) {
             $this->{$type}($content);
         }
     }
-       
+    
     
     protected function updatePermissions()
     {
+        
         // Check if already exists
-        if ($p = Permission::where('name', 'read-inventory-item-groups')->value('id')) {
+        if ($p = Permission::where('name', 'create-production')->value('id')) {
+            dbg('Error: Permission create-production already exists');
             return;
         }
         
@@ -179,7 +181,6 @@ class Install extends Command
             'display_name' => 'Delete Production',
             'description' => 'Delete Production',
         ]);
-       
         
         // Attach permission to roles
         $roles = Role::all();
@@ -197,5 +198,5 @@ class Install extends Command
         }
     }
     
-
+    
 }

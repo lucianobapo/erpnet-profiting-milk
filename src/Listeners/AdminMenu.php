@@ -58,7 +58,7 @@ class AdminMenu
 
         $event->menu->dropdown(trans('erpnet-profiting-milk::menu.production'), function ($sub) use ($user, $attr) {
             if ($user->can('read-common-items')) {
-                $sub->url('milk/production', trans('erpnet-profiting-milk::menu.milk_map'), 1, $attr);
+                //$sub->url('milk/production', trans('erpnet-profiting-milk::menu.milk_map'), 1, $attr);
                 
                 $sub->route('production.index', trans('erpnet-profiting-milk::menu.milk_map'), [], 2, $attr);
             }
