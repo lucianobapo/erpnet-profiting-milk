@@ -35,7 +35,7 @@ class Production extends Controller
         
         //$transfer_cat_id = Category::transfer();
         
-        return view('expenses.payments.index', 
+        return view('erpnet-profiting-milk:production.index'//, 
             //compact('payments', 'vendors', 'categories', 'accounts', 'transfer_cat_id')
             );
     }

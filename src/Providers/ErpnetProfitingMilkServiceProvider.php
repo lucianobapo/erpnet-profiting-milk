@@ -19,7 +19,7 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $app = $this->app;
+        //$app = $this->app;
 
         $this->projectRootDir = __DIR__.DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR;
         $routesDir = $this->projectRootDir."routes".DIRECTORY_SEPARATOR;
@@ -49,6 +49,8 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
         include $routesDir."web.php";
         
         $this->publishMigrations();
+        $this->listenEvents();
+        
 
     }
 
@@ -84,5 +86,11 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
     private function getMigrationsPath()
     {
         return $this->projectRootDir . 'database/migrations/';
+    }
+    
+    private function listenEvents()
+    {
+        $this->app['events']->listen(\App\Events\AdminMenuCreated::class, 
+            \ErpNET\Profiting\Milk\Listeners\AdminMenu::class);
     }
 }
