@@ -13,6 +13,7 @@ use App\Traits\Uploads;
 use App\Utilities\Import;
 use App\Utilities\ImportFile;
 use App\Utilities\Modules;
+use ErpNET\Profiting\Milk\Models\Production;
 
 class Production extends Controller
 {
@@ -25,9 +26,9 @@ class Production extends Controller
      */
     public function index()
     {
-        //$payments = Payment::with(['vendor', 'account', 'category'])->isNotTransfer()->collect(['paid_at'=> 'desc']);
+        $productions = Production::with(['vendor', 'category'])->collect(['created_at'=> 'desc']);
         
-        $vendors = collect(Vendor::enabled()->orderBy('name')->pluck('name', 'id'));
+        //$vendors = collect(Vendor::enabled()->orderBy('name')->pluck('name', 'id'));
         
         //$categories = collect(Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id'));
         
@@ -36,7 +37,7 @@ class Production extends Controller
         //$transfer_cat_id = Category::transfer();
         
         return view('erpnet-profiting-milk::production.index',
-            compact('payments', 'vendors', 'categories', 'accounts', 'transfer_cat_id')
+            compact('productions', 'vendors', 'categories', 'accounts', 'transfer_cat_id')
             );
     }
     
