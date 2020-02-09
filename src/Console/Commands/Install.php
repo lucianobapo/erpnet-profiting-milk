@@ -150,8 +150,8 @@ class Install extends Command
     {
         
         // Check if already exists
-        if ($p = Permission::where('name', 'create-production')->value('id')) {
-            dbg('Error: Permission create-production already exists');
+        if ($p = Permission::where('name', 'create-productions')->value('id')) {
+            dbg('Error: Permission create-productions already exists');
             return;
         }
         
@@ -159,25 +159,25 @@ class Install extends Command
         
         // Item Groups
         $permissions[] = Permission::firstOrCreate([
-            'name' => 'create-production',
+            'name' => 'create-productions',
             'display_name' => 'Create Production',
             'description' => 'Create Production',
         ]);
         
         $permissions[] = Permission::firstOrCreate([
-            'name' => 'read-production',
+            'name' => 'read-productions',
             'display_name' => 'Read Production',
             'description' => 'Read Production',
         ]);
         
         $permissions[] = Permission::firstOrCreate([
-            'name' => 'update-production',
+            'name' => 'update-productions',
             'display_name' => 'Update Production',
             'description' => 'Update Production',
         ]);
         
         $permissions[] = Permission::firstOrCreate([
-            'name' => 'delete-production',
+            'name' => 'delete-productions',
             'display_name' => 'Delete Production',
             'description' => 'Delete Production',
         ]);
