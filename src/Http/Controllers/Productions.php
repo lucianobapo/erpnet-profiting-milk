@@ -13,6 +13,7 @@ use App\Traits\Uploads;
 use App\Utilities\Import;
 use App\Utilities\ImportFile;
 use App\Utilities\Modules;
+use ErpNET\Profiting\Milk\Models\Production;
 
 class Productions extends Controller
 {
@@ -25,7 +26,7 @@ class Productions extends Controller
      */
     public function index()
     {
-        $productions = Productions::with(['vendor', 'category'])->collect(['created_at'=> 'desc']);
+        $productions = Production::with(['vendor', 'category'])->collect(['created_at'=> 'desc']);
         
         //$vendors = collect(Vendor::enabled()->orderBy('name')->pluck('name', 'id'));
         
