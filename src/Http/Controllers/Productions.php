@@ -26,7 +26,8 @@ class Productions extends Controller
      */
     public function index()
     {
-        $productions = Production::with(['vendor', 'category'])->collect(['created_at'=> 'desc']);
+        //$productions = Production::with(['vendor', 'category'])->collect(['created_at'=> 'desc']);
+        $productions = Production::all();
         
         //$vendors = collect(Vendor::enabled()->orderBy('name')->pluck('name', 'id'));
         

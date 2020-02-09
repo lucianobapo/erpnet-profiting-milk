@@ -70,7 +70,9 @@ class Install extends Command
         
         //step 4
         $this->line(' Migrate DB...');
-        //$this->executeProcess('php artisan migrate');
+        $this->executeProcess('php artisan migrate');
+        $this->progressBar->advance();
+        
         //step 5
         $this->line(' Db seed...');
         //$this->executeProcess('php artisan db:seed --class="Backpack\Settings\database\seeds\SettingsTableSeeder"');
