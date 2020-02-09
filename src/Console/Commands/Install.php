@@ -60,8 +60,10 @@ class Install extends Command
 
         //step 3
         //$this->line(' Installing Backpack\\Settings');
-        //$this->line(' Publishing Files...');
-        //$this->executeProcess('php artisan vendor:publish --provider="Backpack\Settings\SettingsServiceProvider"');
+        $this->line(' Publishing Files...');
+        $this->executeProcess('php artisan vendor:publish --force --provider="ErpNET\Profiting\Milk\Providers\ErpnetProfitingMilkServiceProvider"');
+        $this->progressBar->advance();
+        
         //step 4
         $this->line(' Migrate DB...');
         //$this->executeProcess('php artisan migrate');
