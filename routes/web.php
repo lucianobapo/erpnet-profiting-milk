@@ -4,7 +4,7 @@ Route::group(['middleware' => 'web','language'], function () {
 	Route::group(['middleware' => 'auth'], function () {
 	    Route::group(['middleware' => ['adminmenu', 'permission:read-admin-panel']], function () {
 	        Route::group(['prefix' => 'milk', 'namespace'=>'\ErpNET\Profiting\Milk\Http\Controllers'], function () {
-	            Route::resource('production', 'Production', ['middleware' => ['dateformat', 'money']]);
+	            Route::resource('production', 'Productions', ['middleware' => ['dateformat', 'money']]);
 	            
 	        });
 	    });
