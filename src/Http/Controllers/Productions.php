@@ -26,8 +26,7 @@ class Productions extends Controller
      */
     public function index()
     {
-        //$productions = Production::with(['vendor', 'category'])->collect(['created_at'=> 'desc']);
-        $productions = Production::with(['vendor', 'category']);
+        $productions = Production::with(['vendor', 'category'])->collect(['created_at'=> 'desc']);
         
         $vendors = collect(Vendor::enabled()->orderBy('name')->pluck('name', 'id'));
         
@@ -35,10 +34,10 @@ class Productions extends Controller
         
         //$accounts = collect(Account::enabled()->orderBy('name')->pluck('name', 'id'));
         
-        $transfer_cat_id = Category::transfer();
+        //$transfer_cat_id = Category::transfer();
         
         return view('erpnet-profiting-milk::production.index',
-            compact('productions', 'vendors', 'categories', 'transfer_cat_id')
+            compact('productions', 'vendors', 'categories')
         );
     }
     

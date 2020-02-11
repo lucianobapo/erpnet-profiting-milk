@@ -133,4 +133,15 @@ class Production extends Model
 
         return $this->getMedia('attachment')->last();
     }
+    
+    /**
+     * Define the filter provider globally.
+     *
+     * @return ModelFilter
+     */
+    public function modelFilter()
+    {
+        return \ErpNET\Profiting\Milk\Filters\Productions::class;
+    }
+    
 }
