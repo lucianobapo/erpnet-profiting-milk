@@ -26,7 +26,7 @@
 <!-- Default box -->
 <div class="box box-success">
     <div class="box-header with-border">
-        {!! Form::open(['url' => 'milk/production', 'role' => 'form', 'method' => 'GET']) !!}
+        {!! Form::open(['route' => 'production.index', 'role' => 'form', 'method' => 'GET']) !!}
         <div id="items" class="pull-left box-filter">
             <span class="title-filter hidden-xs">{{ trans('general.search') }}:</span>
             {!! Form::text('search', request('search'), ['class' => 'form-control input-filter input-sm', 'placeholder' => trans('general.search_placeholder')]) !!}

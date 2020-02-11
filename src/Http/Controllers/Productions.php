@@ -48,7 +48,7 @@ class Productions extends Controller
      */
     public function show()
     {
-        return redirect('expenses/payments');
+        return redirect()->route('production.index');
     }
     
     /**
@@ -58,21 +58,22 @@ class Productions extends Controller
      */
     public function create()
     {
-        $accounts = Account::enabled()->orderBy('name')->pluck('name', 'id');
+        //$accounts = Account::enabled()->orderBy('name')->pluck('name', 'id');
         
-        $currencies = Currency::enabled()->orderBy('name')->pluck('name', 'code')->toArray();
+        //$currencies = Currency::enabled()->orderBy('name')->pluck('name', 'code')->toArray();
         
-        $account_currency_code = Account::where('id', setting('general.default_account'))->pluck('currency_code')->first();
+        //$account_currency_code = Account::where('id', setting('general.default_account'))->pluck('currency_code')->first();
         
-        $currency = Currency::where('code', $account_currency_code)->first();
+        //$currency = Currency::where('code', $account_currency_code)->first();
         
         $vendors = Vendor::enabled()->orderBy('name')->pluck('name', 'id');
         
         $categories = Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id');
         
-        $payment_methods = Modules::getPaymentMethods();
+        //$payment_methods = Modules::getPaymentMethods();
         
-        return view('expenses.payments.create', compact('accounts', 'currencies', 'account_currency_code', 'currency', 'vendors', 'categories', 'payment_methods'));
+        return view('erpnet-profiting-milk::production.create', 
+            compact('vendors', 'categories'));
     }
     
     /**
