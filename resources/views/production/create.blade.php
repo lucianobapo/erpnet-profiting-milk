@@ -28,7 +28,7 @@
             {{ Form::textareaGroup('description', trans('general.description')) }}
 
             @stack('category_id_input_start')
-            <div class="form-group col-md-6 required {{ $errors->has('category_id') ? 'has-error' : ''}}">
+            <div class="form-group col-md-6 {{ $errors->has('category_id') ? 'has-error' : ''}}">
                 {!! Form::label('category_id', trans_choice('general.categories', 1), ['class' => 'control-label']) !!}
                 <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-folder-open-o"></i></div>

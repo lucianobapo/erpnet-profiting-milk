@@ -3,7 +3,7 @@
 namespace ErpNET\Profiting\Milk\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Expense\Payment as Request;
+use ErpNET\Profiting\Milk\Http\Requests\Production as Request;
 use App\Models\Banking\Account;
 use App\Models\Expense\Payment;
 use App\Models\Expense\Vendor;
@@ -13,11 +13,11 @@ use App\Traits\Uploads;
 use App\Utilities\Import;
 use App\Utilities\ImportFile;
 use App\Utilities\Modules;
-use ErpNET\Profiting\Milk\Models\Production;
+use ErpNET\Profiting\Milk\Models\Production as Model;
 
 class Productions extends Controller
 {
-    //use Uploads;
+    use Uploads;
     
     /**
      * Display a listing of the resource.
@@ -85,41 +85,42 @@ class Productions extends Controller
      */
     public function store(Request $request)
     {
-        $payment = Payment::create($request->input());
+        $model = Model::create($request->input());
         
         // Upload attachment
-        $media = $this->getMedia($request->file('attachment'), 'payments');
+        $media = $this->getMedia($request->file('attachment'), 'productions');
         
         if ($media) {
-            $payment->attachMedia($media, 'attachment');
+            $model->attachMedia($media, 'attachment');
         }
         
         // Recurring
-        $payment->createRecurring();
+        $model->createRecurring();
         
-        $message = trans('messages.success.added', ['type' => trans_choice('general.payments', 1)]);
+        $message = trans('messages.success.added', [
+            'type' => trans_choice('erpnet-profiting-milk::general.title', 1)]);
         
         flash($message)->success();
         
-        return redirect('expenses/payments');
+        return redirect()->route('production.index');
     }
     
     /**
      * Duplicate the specified resource.
      *
-     * @param  Payment  $payment
+     * @param  Model  $model
      *
      * @return Response
      */
-    public function duplicate(Payment $payment)
+    public function duplicate(Model $model)
     {
-        $clone = $payment->duplicate();
+        $clone = $model->duplicate();
         
-        $message = trans('messages.success.duplicated', ['type' => trans_choice('general.payments', 1)]);
+        $message = trans('messages.success.duplicated', ['type' => trans_choice('erpnet-profiting-milk::general.title', 1)]);
         
         flash($message)->success();
         
-        return redirect('expenses/payments/' . $clone->id . '/edit');
+        return redirect()->route('production.edit', [$clone]);
     }
     
     /**
@@ -131,92 +132,92 @@ class Productions extends Controller
      */
     public function import(ImportFile $import)
     {
-        if (!Import::createFromFile($import, 'Expense\Payment')) {
-            return redirect('common/import/expenses/payments');
+        if (!Import::createFromFile($import, 'Production', 'ErpNET\Profiting\Milk')) {
+            return redirect()->route('import.create', ['group'=>'', 'type'=>'productions']);
         }
         
-        $message = trans('messages.success.imported', ['type' => trans_choice('general.payments', 2)]);
+        $message = trans('messages.success.imported', [
+            'type' => trans_choice('erpnet-profiting-milk::general.title', 2)]);
         
         flash($message)->success();
         
-        return redirect('expenses/payments');
+        return redirect()->route('production.index');
     }
     
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Payment  $payment
+     * @param  Model $model
      *
      * @return Response
      */
-    public function edit(Payment $payment)
+    public function edit(Model $model)
     {
-        $accounts = Account::enabled()->orderBy('name')->pluck('name', 'id');
+        //$accounts = Account::enabled()->orderBy('name')->pluck('name', 'id');
         
-        $currencies = Currency::enabled()->orderBy('name')->pluck('name', 'code')->toArray();
+        //$currencies = Currency::enabled()->orderBy('name')->pluck('name', 'code')->toArray();
         
-        $currency = Currency::where('code', $payment->currency_code)->first();
+        //$currency = Currency::where('code', $payment->currency_code)->first();
         
         $vendors = Vendor::enabled()->orderBy('name')->pluck('name', 'id');
         
         $categories = Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id');
         
-        $payment_methods = Modules::getPaymentMethods();
+        //$payment_methods = Modules::getPaymentMethods();
         
-        return view('expenses.payments.edit', compact('payment', 'accounts', 'currencies', 'currency', 'vendors', 'categories', 'payment_methods'));
+        return view('erpnet-profiting-milk::production.edit', 
+            compact('model', 'vendors', 'categories'));
     }
     
     /**
      * Update the specified resource in storage.
      *
-     * @param  Payment  $payment
+     * @param  Model $model
      * @param  Request  $request
      *
      * @return Response
      */
-    public function update(Payment $payment, Request $request)
+    public function update(Model $model, Request $request)
     {
-        $payment->update($request->input());
+        $model->update($request->input());
         
         // Upload attachment
         if ($request->file('attachment')) {
-            $media = $this->getMedia($request->file('attachment'), 'payments');
+            $media = $this->getMedia($request->file('attachment'), 'productions');
             
-            $payment->attachMedia($media, 'attachment');
+            $model->attachMedia($media, 'attachment');
         }
         
         // Recurring
-        $payment->updateRecurring();
+        $model->updateRecurring();
         
-        $message = trans('messages.success.updated', ['type' => trans_choice('general.payments', 1)]);
+        $message = trans('messages.success.updated', [
+            'type' => trans_choice('erpnet-profiting-milk::general.title', 1)]);
         
         flash($message)->success();
         
-        return redirect('expenses/payments');
+        return redirect()->route('production.index');
     }
     
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Payment  $payment
+     * @param  Model $model
      *
      * @return Response
      */
-    public function destroy(Payment $payment)
+    public function destroy(Model $model)
     {
-        // Can't delete transfer payment
-        if ($payment->category->id == Category::transfer()) {
-            return redirect('expenses/payments');
-        }
         
-        $payment->recurring()->delete();
-        $payment->delete();
+        $model->recurring()->delete();
+        $model->delete();
         
-        $message = trans('messages.success.deleted', ['type' => trans_choice('general.payments', 1)]);
+        $message = trans('messages.success.deleted', [
+            'type' => trans_choice('erpnet-profiting-milk::general.title', 1)]);
         
         flash($message)->success();
         
-        return redirect('expenses/payments');
+        return redirect()->route('production.index');
     }
     
     /**
@@ -226,9 +227,9 @@ class Productions extends Controller
      */
     public function export()
     {
-        \Excel::create('payments', function($excel) {
-            $excel->sheet('payments', function($sheet) {
-                $sheet->fromModel(Payment::filter(request()->input())->get()->makeHidden([
+        \Excel::create('productions', function($excel) {
+            $excel->sheet('productions', function($sheet) {
+                $sheet->fromModel(Model::filter(request()->input())->get()->makeHidden([
                     'id', 'company_id', 'parent_id', 'created_at', 'updated_at', 'deleted_at'
                 ]));
             });
