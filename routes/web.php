@@ -6,6 +6,8 @@ Route::group(['middleware' => 'web','language'], function () {
 	        Route::group(['prefix' => 'milk', 'namespace'=>'\ErpNET\Profiting\Milk\Http\Controllers'], function () {
 	            Route::resource('production', 'Productions', ['middleware' => ['dateformat', 'money']]);
 	            
+	            Route::post('production/import', 'Productions@import')->name('production.import');
+	            Route::get('production/export', 'Productions@export')->name('production.export');
 	        });
 	    });
 	});	

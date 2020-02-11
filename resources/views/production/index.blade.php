@@ -2,6 +2,26 @@
 
 @section('title', trans_choice('erpnet-profiting-milk::general.title', 2))
 
+@section('new_button')
+    @permission('create-productions')
+    	<span class="new-button">
+    		<a href="{{ route('production.create') }}" class="btn btn-success btn-sm">
+    			<span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}
+    		</a>
+    	</span>
+    	<span>
+    		<a href="{{ route('production.import') }}" class="btn btn-default btn-sm">
+    			<span class="fa fa-download"></span> &nbsp;{{ trans('import.import') }}
+    		</a>
+    	</span>
+    @endpermission
+    <span>
+    	<a href="{{ route('production.export', request()->input()) }}" class="btn btn-default btn-sm">
+    		<span class="fa fa-upload"></span> &nbsp;{{ trans('general.export') }}
+    	</a>
+    </span>
+@endsection
+
 @section('content')
 <!-- Default box -->
 <div class="box box-success">
@@ -42,7 +62,7 @@
     <!-- /.box-body -->
 
     <div class="box-footer">
-        
+        @include('partials.admin.pagination', ['items' => $productions, 'type' => 'productions'])
     </div>
     <!-- /.box-footer -->
 </div>

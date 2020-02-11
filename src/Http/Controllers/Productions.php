@@ -29,17 +29,17 @@ class Productions extends Controller
         //$productions = Production::with(['vendor', 'category'])->collect(['created_at'=> 'desc']);
         $productions = Production::with(['vendor', 'category']);
         
-        //$vendors = collect(Vendor::enabled()->orderBy('name')->pluck('name', 'id'));
+        $vendors = collect(Vendor::enabled()->orderBy('name')->pluck('name', 'id'));
         
-        //$categories = collect(Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id'));
+        $categories = collect(Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id'));
         
         //$accounts = collect(Account::enabled()->orderBy('name')->pluck('name', 'id'));
         
-        //$transfer_cat_id = Category::transfer();
+        $transfer_cat_id = Category::transfer();
         
         return view('erpnet-profiting-milk::production.index',
-            compact('productions', 'vendors', 'categories', 'accounts', 'transfer_cat_id')
-            );
+            compact('productions', 'vendors', 'categories', 'transfer_cat_id')
+        );
     }
     
     /**
