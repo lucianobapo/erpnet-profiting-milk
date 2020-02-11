@@ -62,7 +62,11 @@
     <!-- /.box-body -->
 
     <div class="box-footer">
-        @include('partials.admin.pagination', ['items' => $productions, 'type' => 'productions'])
+        @include('partials.admin.pagination', [
+        	'items' => $productions, 
+        	'type' => 'productions',
+        	'trans' => 'erpnet-profiting-milk::general.title'
+        ])
     </div>
     <!-- /.box-footer -->
 </div>
