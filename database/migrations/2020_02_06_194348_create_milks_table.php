@@ -25,7 +25,7 @@ class CreateMilksTable extends Migration
             
             $table->integer('vendor_id')->nullable();
             $table->text('description')->nullable();
-            $table->integer('category_id');
+            $table->integer('category_id')->nullable();
             //$table->string('payment_method');
             $table->string('reference')->nullable();
             $table->string('attachment')->nullable();

@@ -8,7 +8,8 @@
         {!! Form::open(['route' => 'production.index', 'files' => true, 'role' => 'form', 'class' => 'form-loading-button']) !!}
 
         <div class="box-body">
-            {{ Form::textGroup('posted_at', trans('erpnet-profiting-milk::table.posted_at'), 'calendar',['id' => 'paid_at', 'class' => 'form-control', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy-mm-dd\'', 'data-mask' => '', 'autocomplete' => 'off'], Date::now()->toDateString()) }}
+            {{ Form::textGroup('posted_at', trans('erpnet-profiting-milk::table.posted_at'), 
+            'calendar',['id' => 'posted_at', 'class' => 'form-control', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy-mm-dd\'', 'data-mask' => '', 'autocomplete' => 'off'], Date::now()->toDateString()) }}
 
             {{ Form::textGroup('quantity', trans('erpnet-profiting-milk::table.quantity'), 'pencil', ['required' => 'required', 'autofocus' => 'autofocus']) }}
 

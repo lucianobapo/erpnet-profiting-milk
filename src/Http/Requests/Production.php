@@ -25,10 +25,10 @@ class Production extends Request
     public function rules()
     {
         return [
-            'posted_at' => 'required|date_format:Y-m-d H:i:s',
+            'posted_at' => 'required|date_format:Y-m-d',
             'quantity' => 'required|integer',
             'vendor_id' => 'nullable|integer',
-            'category_id' => 'required|integer',
+            //'category_id' => 'required|integer',
             'attachment' => 'mimes:' . setting('general.file_types') . '|between:0,' . setting('general.file_size') * 1024,
         ];
     }
