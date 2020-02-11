@@ -14,25 +14,46 @@ use Date;
 
 class Production extends Model
 {
-    use Cloneable, Currencies, DateTime, Eloquence, Media, Recurring;
+    use Cloneable, 
+    //Currencies, 
+    DateTime, Eloquence, Media, Recurring;
 
     protected $table = 'milk_productions';
 
-    protected $dates = ['deleted_at', 'paid_at'];
+    protected $dates = ['deleted_at', 'posted_at'];
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['company_id', 'account_id', 'paid_at', 'amount', 'currency_code', 'currency_rate', 'vendor_id', 'description', 'category_id', 'payment_method', 'reference', 'parent_id'];
+    protected $fillable = [
+        'company_id', 
+        //'account_id', 
+        'posted_at', 
+        'quantity', 
+        //'currency_code', 
+        //'currency_rate', 
+        'vendor_id', 
+        'description', 
+        'category_id', 
+        //'payment_method', 
+        'reference', 
+        'parent_id',
+        
+    ];
 
     /**
      * Sortable columns.
      *
      * @var array
      */
-    public $sortable = ['paid_at', 'amount', 'category.name', 'account.name'];
+    public $sortable = [
+        'posted_at', 
+        'quantity', 
+        'category.name', 
+        //'account.name',        
+    ];
 
     /**
      * Searchable rules.
@@ -76,9 +97,9 @@ class Production extends Model
      * @param  string  $value
      * @return void
      */
-    public function setAmountAttribute($value)
+    public function setQuantityAttribute($value)
     {
-        $this->attributes['amount'] = (double) $value;
+        $this->attributes['quantity'] = (double) $value;
     }
 
     /**
@@ -86,15 +107,15 @@ class Production extends Model
      *
      * @param  string  $value
      * @return void
-     */
+     
     public function setCurrencyRateAttribute($value)
     {
         $this->attributes['currency_rate'] = (double) $value;
-    }
+    }*/
 
     public static function scopeLatest($query)
     {
-        return $query->orderBy('paid_at', 'desc');
+        return $query->orderBy('posted_at', 'desc');
     }
 
     /**

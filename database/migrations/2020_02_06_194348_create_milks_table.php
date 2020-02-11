@@ -17,16 +17,16 @@ class CreateMilksTable extends Migration
             
             $table->increments('id');
             $table->integer('company_id');
-            $table->integer('account_id');
-            $table->date('paid_at');
-            $table->double('amount', 15, 4);
-            $table->string('currency_code');
-            $table->double('currency_rate', 15, 8);
+            //$table->integer('account_id');
+            $table->date('posted_at');
+            $table->double('quantity', 7, 2);
+            //$table->string('currency_code');
+            //$table->double('currency_rate', 15, 8);
             
             $table->integer('vendor_id')->nullable();
             $table->text('description')->nullable();
             $table->integer('category_id');
-            $table->string('payment_method');
+            //$table->string('payment_method');
             $table->string('reference')->nullable();
             $table->string('attachment')->nullable();
             $table->timestamps();
