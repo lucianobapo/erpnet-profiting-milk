@@ -14,10 +14,10 @@
             {{ Form::textGroup('quantity', trans('general.quantity'), 'pencil', ['required' => 'required', 'autofocus' => 'autofocus']) }}
            
             {{ Form::selectGroup('vendor_id', trans_choice('general.vendors', 1), 'user', $vendors, 
-            	null, ['id' => 'vendor_id'], 'col' => 'col-md-6', 'button_id' => 'button-vendor') }}    
+            	null, ['required' => 'required', 'id' => 'vendor_id'], 'col-md-6', 'button-vendor') }}    
             
 			{{ Form::selectGroup('category_id', trans_choice('general.categories', 1), 'folder-open-o', $categories, 
-            	null, ['id' => 'category_id'], 'col' => 'col-md-6', 'button_id' => 'button-category') }}   
+            	null, ['required' => 'required', 'id' => 'category_id'], 'col-md-6', 'button-category') }}   
 
             {{ Form::textareaGroup('description', trans('general.description')) }}
 

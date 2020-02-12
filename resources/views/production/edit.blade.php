@@ -30,9 +30,9 @@
 
             {{ Form::textGroup('quantity', trans('general.quantity'), 'money', ['required' => 'required', 'autofocus' => 'autofocus']) }}
 
-            {{ Form::selectGroup('vendor_id', trans_choice('general.vendors', 1), 'user', $vendors, null, []) }}
+            {{ Form::selectGroup('vendor_id', trans_choice('general.vendors', 1), 'user', $vendors) }}
          	
-         	{{ Form::selectGroup('category_id', trans_choice('general.categories', 1), 'folder-open-o', $categories, null, []) }}
+         	{{ Form::selectGroup('category_id', trans_choice('general.categories', 1), 'folder-open-o', $categories) }}
 
             {{ Form::textareaGroup('description', trans('general.description')) }}
 
