@@ -48,10 +48,10 @@
                 <thead>
                     <tr>
                         <th class="col-md-2">
-                        	@sortablelink('posted_at', trans('erpnet-profiting-milk::table.posted_at'))
+                        	@sortablelink('posted_at', trans('general.date'))
                         </th>
                         <th class="col-md-2 text-right amount-space">
-                        	@sortablelink('quantity', trans('erpnet-profiting-milk::table.quantity'))
+                        	@sortablelink('quantity', trans('general.quantity'))
                         </th>
                         <th class="col-md-3 hidden-xs">
                         	@sortablelink('vendor.name', trans_choice('general.vendors', 1))
