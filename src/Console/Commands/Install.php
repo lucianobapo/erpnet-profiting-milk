@@ -70,7 +70,7 @@ class Install extends Command
         
         //step 4
         $this->line(' Migrate DB...');
-        $this->executeProcess('php artisan migrate');
+        $this->executeProcess('php artisan migrate --force --step');
         $this->progressBar->advance();
         
         //step 5
