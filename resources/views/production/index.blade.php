@@ -54,9 +54,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                	@foreach($$productions as $item)
+                	@foreach($productions as $item)
                 		<tr>
                 			<td><a href="{{ route('production.edit', $item) }}">{{ Date::parse($item->posted_at)->format($date_format) }}</a></td>
+                			<td class="text-right amount-space">{{ $item->quantity }}</td>
                 			<td class="hidden-xs">{{ !empty($item->vendor->name) ? $item->vendor->name : trans('general.na') }}</td>
                 			<td class="hidden-xs">{{ $item->category ? $item->category->name : trans('general.na') }}</td>
                 			<td class="text-center">                            
@@ -65,11 +66,11 @@
                                         <i class="fa fa-ellipsis-h"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right">
-                                        <li><a href="{{ route('production.edit', $item') }}">{{ trans('general.edit') }}</a></li>
+                                        <li><a href="{{ route('production.edit', $item) }}">{{ trans('general.edit') }}</a></li>
                                         
                                         @permission('create-productions')
                                         	<li class="divider"></li>
-                                        	<li><a href="{{ route('production.duplicate', $item') }}">{{ trans('general.duplicate') }}</a></li>
+                                        	<li><a href="{{ route('production.duplicate', $item) }}">{{ trans('general.duplicate') }}</a></li>
                                         @endpermission
                                         @permission('delete-productions')
                                         	<li class="divider"></li>

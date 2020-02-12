@@ -8,6 +8,7 @@ Route::group(['middleware' => 'web','language'], function () {
 	            
 	            Route::post('production/import', 'Productions@import')->name('production.import');
 	            Route::get('production/export', 'Productions@export')->name('production.export');
+	            Route::get('production/{production}/duplicate', 'Productions@duplicate')->name('production.duplicate');
 	        });
 	    });
 	});	
