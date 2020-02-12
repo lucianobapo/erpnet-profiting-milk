@@ -20,7 +20,7 @@
         {!! Form::model($model, [
             'method' => 'PATCH',
             'files' => true,
-            'route' => ['production.update', $model->id]
+            'route' => ['production.update', $model->id],
             'role' => 'form',
             'class' => 'form-loading-button'
         ]) !!}
@@ -32,7 +32,7 @@
 
             {{ Form::selectGroup('vendor_id', trans_choice('general.vendors', 1), 'user', $vendors, null, []) }}
          	
-         	{{ Form::selectGroup('category_id', trans_choice('general.categories', 1), 'folder-open-o', $categories) }}
+         	{{ Form::selectGroup('category_id', trans_choice('general.categories', 1), 'folder-open-o', $categories, null, []) }}
 
             {{ Form::textareaGroup('description', trans('general.description')) }}
 

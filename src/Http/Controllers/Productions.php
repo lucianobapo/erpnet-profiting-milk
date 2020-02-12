@@ -13,6 +13,7 @@ use App\Traits\Uploads;
 use App\Utilities\Import;
 use App\Utilities\ImportFile;
 use App\Utilities\Modules;
+use Illuminate\Support\Facades\Response;
 use ErpNET\Profiting\Milk\Models\Production as Model;
 
 class Productions extends Controller
@@ -31,10 +32,6 @@ class Productions extends Controller
         $vendors = collect(Vendor::enabled()->orderBy('name')->pluck('name', 'id'));
         
         $categories = collect(Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id'));
-        
-        //$accounts = collect(Account::enabled()->orderBy('name')->pluck('name', 'id'));
-        
-        //$transfer_cat_id = Category::transfer();
         
         return view('erpnet-profiting-milk::production.index',
             compact('productions', 'vendors', 'categories')
@@ -57,21 +54,11 @@ class Productions extends Controller
      * @return Response
      */
     public function create()
-    {
-        //$accounts = Account::enabled()->orderBy('name')->pluck('name', 'id');
-        
-        //$currencies = Currency::enabled()->orderBy('name')->pluck('name', 'code')->toArray();
-        
-        //$account_currency_code = Account::where('id', setting('general.default_account'))->pluck('currency_code')->first();
-        
-        //$currency = Currency::where('code', $account_currency_code)->first();
-        
+    {        
         $vendors = Vendor::enabled()->orderBy('name')->pluck('name', 'id');
         
         $categories = Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id');
-        
-        //$payment_methods = Modules::getPaymentMethods();
-        
+                
         return view('erpnet-profiting-milk::production.create', 
             compact('vendors', 'categories'));
     }
@@ -112,11 +99,12 @@ class Productions extends Controller
      *
      * @return Response
      */
-    public function duplicate(Model $model)
+    public function duplicate(Model $production)
     {
-        $clone = $model->duplicate();
+        $clone = $production->duplicate();
         
-        $message = trans('messages.success.duplicated', ['type' => trans_choice('erpnet-profiting-milk::general.title', 1)]);
+        $message = trans('messages.success.duplicated', [
+            'type' => trans_choice('erpnet-profiting-milk::general.title', 1)]);
         
         flash($message)->success();
         
@@ -147,49 +135,43 @@ class Productions extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Model $model
+     * @param  Model $production
      *
      * @return Response
      */
-    public function edit(Model $model)
-    {
-        //$accounts = Account::enabled()->orderBy('name')->pluck('name', 'id');
-        
-        //$currencies = Currency::enabled()->orderBy('name')->pluck('name', 'code')->toArray();
-        
-        //$currency = Currency::where('code', $payment->currency_code)->first();
-        
+    public function edit(Model $production)
+    {        
         $vendors = Vendor::enabled()->orderBy('name')->pluck('name', 'id');
         
         $categories = Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id');
         
-        //$payment_methods = Modules::getPaymentMethods();
-        
-        return view('erpnet-profiting-milk::production.edit', 
-            compact('model', 'vendors', 'categories'));
+        return view('erpnet-profiting-milk::production.edit',
+            compact('vendors', 'categories'))->with([
+                'model'=>$production,
+            ]);
     }
     
     /**
      * Update the specified resource in storage.
      *
-     * @param  Model $model
+     * @param  Model $production
      * @param  Request  $request
      *
      * @return Response
      */
-    public function update(Model $model, Request $request)
+    public function update(Model $production, Request $request)
     {
-        $model->update($request->input());
+        $production->update($request->input());
         
         // Upload attachment
         if ($request->file('attachment')) {
             $media = $this->getMedia($request->file('attachment'), 'productions');
             
-            $model->attachMedia($media, 'attachment');
+            $production->attachMedia($media, 'attachment');
         }
         
         // Recurring
-        $model->updateRecurring();
+        $production->updateRecurring();
         
         $message = trans('messages.success.updated', [
             'type' => trans_choice('erpnet-profiting-milk::general.title', 1)]);
@@ -202,15 +184,15 @@ class Productions extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Model $model
+     * @param  Model $production
      *
      * @return Response
      */
-    public function destroy(Model $model)
+    public function destroy(Model $production)
     {
         
-        $model->recurring()->delete();
-        $model->delete();
+        $production->recurring()->delete();
+        $production->delete();
         
         $message = trans('messages.success.deleted', [
             'type' => trans_choice('erpnet-profiting-milk::general.title', 1)]);
