@@ -8,10 +8,10 @@
         {!! Form::open(['route' => 'production.index', 'files' => true, 'role' => 'form', 'class' => 'form-loading-button']) !!}
 
         <div class="box-body">
-            {{ Form::textGroup('posted_at', trans('erpnet-profiting-milk::table.posted_at'), 
+            {{ Form::textGroup('posted_at', trans('general.date'), 
             'calendar',['id' => 'posted_at', 'class' => 'form-control', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy-mm-dd\'', 'data-mask' => '', 'autocomplete' => 'off'], Date::now()->toDateString()) }}
 
-            {{ Form::textGroup('quantity', trans('erpnet-profiting-milk::table.quantity'), 'pencil', ['required' => 'required', 'autofocus' => 'autofocus']) }}
+            {{ Form::textGroup('quantity', trans('general.quantity'), 'pencil', ['required' => 'required', 'autofocus' => 'autofocus']) }}
 
             @stack('vendor_id_input_start')
             <div class="form-group col-md-6">
@@ -24,23 +24,23 @@
                 </span>
                 </div>
             </div>
-            @stack('vendor_id_input_end')
+            @stack('vendor_id_input_end')            
+            
+            @stack('category_id_input_start')
+                <div class="form-group col-md-6 {{ $errors->has('category_id') ? 'has-error' : ''}}">
+                    {!! Form::label('category_id', trans_choice('general.categories', 1), ['class' => 'control-label']) !!}
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-folder-open-o"></i></div>
+                        {!! Form::select('category_id', $categories, null, array_merge(['class' => 'form-control', 'placeholder' => trans('general.form.select.field', ['field' => trans_choice('general.categories', 1)])])) !!}
+                        <div class="input-group-btn">
+                            <button type="button" id="button-category" class="btn btn-default btn-icon"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                    {!! $errors->first('category_id', '<p class="help-block">:message</p>') !!}
+                </div>
+            @stack('category_id_input_end')
 
             {{ Form::textareaGroup('description', trans('general.description')) }}
-
-            @stack('category_id_input_start')
-            <div class="form-group col-md-6 {{ $errors->has('category_id') ? 'has-error' : ''}}">
-                {!! Form::label('category_id', trans_choice('general.categories', 1), ['class' => 'control-label']) !!}
-                <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-folder-open-o"></i></div>
-                    {!! Form::select('category_id', $categories, null, array_merge(['class' => 'form-control', 'placeholder' => trans('general.form.select.field', ['field' => trans_choice('general.categories', 1)])])) !!}
-                    <div class="input-group-btn">
-                        <button type="button" id="button-category" class="btn btn-default btn-icon"><i class="fa fa-plus"></i></button>
-                    </div>
-                </div>
-                {!! $errors->first('category_id', '<p class="help-block">:message</p>') !!}
-            </div>
-            @stack('category_id_input_end')
 
             {{ Form::recurring('create') }}
 

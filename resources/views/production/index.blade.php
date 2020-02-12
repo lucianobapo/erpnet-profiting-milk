@@ -31,7 +31,8 @@
             <span class="title-filter hidden-xs">{{ trans('general.search') }}:</span>
             {!! Form::text('search', request('search'), ['class' => 'form-control input-filter input-sm', 'placeholder' => trans('general.search_placeholder')]) !!}
             {!! Form::dateRange('date', trans('general.date'), 'calendar', []) !!}
-            
+            {!! Form::select('vendors[]', $vendors, request('vendors'), ['id' => 'filter-vendors', 'class' => 'form-control input-filter input-lg', 'multiple' => 'multiple']) !!}
+            {!! Form::select('categories[]', $categories, request('categories'), ['id' => 'filter-categories', 'class' => 'form-control input-filter input-lg', 'multiple' => 'multiple']) !!}
 			{!! Form::button('<span class="fa fa-filter"></span> &nbsp;' . trans('general.filter'), ['type' => 'submit', 'class' => 'btn btn-sm btn-default btn-filter']) !!}
         </div>
         <div class="pull-right">
@@ -46,11 +47,21 @@
             <table class="table table-striped table-hover" id="tbl-payments">
                 <thead>
                     <tr>
-                        <th class="col-md-2">@sortablelink('posted_at', trans('erpnet-profiting-milk::table.posted_at'))</th>
-                        <th class="col-md-2 text-right amount-space">@sortablelink('quantity', trans('erpnet-profiting-milk::table.quantity'))</th>
-                        <th class="col-md-3 hidden-xs">@sortablelink('vendor.name', trans_choice('general.vendors', 1))</th>
-                        <th class="col-md-2 hidden-xs">@sortablelink('category.name', trans_choice('general.categories', 1))</th>
-                        <th class="col-md-1 text-center">{{ trans('general.actions') }}</th>
+                        <th class="col-md-2">
+                        	@sortablelink('posted_at', trans('erpnet-profiting-milk::table.posted_at'))
+                        </th>
+                        <th class="col-md-2 text-right amount-space">
+                        	@sortablelink('quantity', trans('erpnet-profiting-milk::table.quantity'))
+                        </th>
+                        <th class="col-md-3 hidden-xs">
+                        	@sortablelink('vendor.name', trans_choice('general.vendors', 1))
+                        </th>
+                        <th class="col-md-2 hidden-xs">
+                        	@sortablelink('category.name', trans_choice('general.categories', 1))
+                        </th>
+                        <th class="col-md-1 text-center">
+                        	{{ trans('general.actions') }}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -114,5 +125,16 @@
 @endpush
 
 @push('scripts')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#filter-categories").select2({
+                placeholder: "{{ trans('general.form.select.field', ['field' => trans_choice('general.categories', 1)]) }}"
+            });
+    
+            $("#filter-vendors").select2({
+                placeholder: "{{ trans('general.form.select.field', ['field' => trans_choice('general.vendors', 1)]) }}"
+            });
 
+        });
+    </script>
 @endpush
