@@ -54,7 +54,32 @@
                     </tr>
                 </thead>
                 <tbody>
-              		
+                	@foreach($$productions as $item)
+                		<tr>
+                			<td><a href="{{ route('production.edit', $item) }}">{{ Date::parse($item->posted_at)->format($date_format) }}</a></td>
+                			<td class="hidden-xs">{{ !empty($item->vendor->name) ? $item->vendor->name : trans('general.na') }}</td>
+                			<td class="hidden-xs">{{ $item->category ? $item->category->name : trans('general.na') }}</td>
+                			<td class="text-center">                            
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="{{ route('production.edit', $item') }}">{{ trans('general.edit') }}</a></li>
+                                        
+                                        @permission('create-productions')
+                                        	<li class="divider"></li>
+                                        	<li><a href="{{ route('production.duplicate', $item') }}">{{ trans('general.duplicate') }}</a></li>
+                                        @endpermission
+                                        @permission('delete-productions')
+                                        	<li class="divider"></li>
+                                        	<li>{!! Form::deleteLink($item, route('production.index')) !!}</li>
+                                        @endpermission
+                                    </ul>
+                                </div>                            
+                        	</td>
+                		</tr>
+              		@endforeach
                 </tbody>
             </table>
         </div>
@@ -65,7 +90,7 @@
         @include('partials.admin.pagination', [
         	'items' => $productions, 
         	'type' => 'productions',
-        	'trans' => 'erpnet-profiting-milk::general.title'
+        	'title' => trans_choice('erpnet-profiting-milk::general.title', 2)
         ])
     </div>
     <!-- /.box-footer -->
