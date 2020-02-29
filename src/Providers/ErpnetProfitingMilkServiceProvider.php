@@ -10,7 +10,7 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
         \ErpNET\Profiting\Milk\Console\Commands\Install::class,
     ];
     
-    protected $projectRootDir;
+    private     $projectRootDir;
 
     /**
      * Bootstrap the application services.
@@ -18,14 +18,12 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
-        //$app = $this->app;
+    {        
+        
 
-        $this->projectRootDir = __DIR__.DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR;
-        $routesDir = $this->projectRootDir."routes".DIRECTORY_SEPARATOR;
-
-//        $configPath = $projectRootDir . 'config/erpnetModels.php';
-//        $this->mergeConfigFrom($configPath, 'erpnetModels');
+        
+        $this->mergeConfigFrom($this->getConfigPath(), 'profiting');
+        dd(config('profiting'));
 
         //Publish Config
 //        $this->publishes([
@@ -45,6 +43,7 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
 //        }
 
         //Routing
+        $routesDir = $this->getProjectRootDir()."routes".DIRECTORY_SEPARATOR;
 //        include $routesDir."api.php";
         include $routesDir."web.php";
         
@@ -87,9 +86,19 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
         $this->publishes([$path => database_path('migrations')], 'migrations');
     }
     
+    private function getProjectRootDir()
+    {
+        return __DIR__.DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR;
+    }
+    
     private function getMigrationsPath()
     {
-        return $this->projectRootDir . 'database/migrations/';
+        return $this->getProjectRootDir() . 'database/migrations/';
+    }
+    
+    private function getConfigPath()
+    {
+        return $this->getProjectRootDir() . 'config/erpnet-profiting-milk.php';
     }
     
     private function listenEvents()
