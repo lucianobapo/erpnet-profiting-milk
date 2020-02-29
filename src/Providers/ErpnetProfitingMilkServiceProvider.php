@@ -31,7 +31,7 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
         
         $this->registerViews();
         
-        //$this->mergeConfig();
+        $this->mergeConfig();
 
     }
 
