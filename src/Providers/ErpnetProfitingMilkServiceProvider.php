@@ -20,28 +20,6 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
     public function boot()
     {        
         
-
-        
-        $this->mergeConfigFrom($this->getConfigPath(), 'profiting');
-        dd(config('profiting'));
-
-        //Publish Config
-//        $this->publishes([
-//            $projectRootDir.'permissions.sh' => base_path('permissions.sh')
-//        ], 'erpnetPermissions');
-
-        //Bind Interfaces
-//        $app->bind($bindInterface, $bindRepository);
-//        foreach (config('erpnetMigrates.tables') as $table => $config) {
-//            $routePrefix = isset($config['routePrefix'])?$config['routePrefix']:str_singular($table);
-//            $bindInterface = '\\ErpNET\\Models\\v1\\Interfaces\\'.(isset($config['bindInterface'])?$config['bindInterface']:(ucfirst($routePrefix).'Repository'));
-//            $bindRepository = '\\ErpNET\\Models\\v1\\Repositories\\'.(isset($config['bindRepository'])?$config['bindRepository']:(ucfirst($routePrefix).'RepositoryEloquent'));
-//
-//            if(interface_exists($bindInterface)  && class_exists($bindRepository)){
-//                $app->bind($bindInterface, $bindRepository);
-//            }
-//        }
-
         //Routing
         $routesDir = $this->getProjectRootDir()."routes".DIRECTORY_SEPARATOR;
 //        include $routesDir."api.php";
@@ -54,6 +32,8 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
         $this->registerTranslations();
         
         $this->registerViews();
+        
+        $this->mergeConfig();
 
     }
 
@@ -140,6 +120,17 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/vendor/erpnet-profiting-milk';
         }, \Config::get('view.paths')), [$sourcePath]), 'erpnet-profiting-milk');
+    }
+    
+    private function mergeConfig()
+    {
+        //$this->mergeConfigFrom($this->getConfigPath(), 'profiting.category_types');
+        
+        config([
+            'profiting.category_types' => array_merge(
+                (require $this->getConfigPath())['category_types'],
+                config('profiting.category_types'))
+        ]);
     }
         
 }
