@@ -31,7 +31,7 @@ class Productions extends Controller
         
         $vendors = collect(Vendor::enabled()->orderBy('name')->pluck('name', 'id'));
         
-        $categories = collect(Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id'));
+        $categories = collect(Category::enabled()->type('profiting-milk')->orderBy('name')->pluck('name', 'id'));
         
         return view('erpnet-profiting-milk::production.index',
             compact('productions', 'vendors', 'categories')
@@ -57,7 +57,7 @@ class Productions extends Controller
     {        
         $vendors = Vendor::enabled()->orderBy('name')->pluck('name', 'id');
         
-        $categories = Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id');
+        $categories = Category::enabled()->type('profiting-milk')->orderBy('name')->pluck('name', 'id');
                 
         return view('erpnet-profiting-milk::production.create', 
             compact('vendors', 'categories'));
@@ -143,7 +143,7 @@ class Productions extends Controller
     {        
         $vendors = Vendor::enabled()->orderBy('name')->pluck('name', 'id');
         
-        $categories = Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id');
+        $categories = Category::enabled()->type('profiting-milk')->orderBy('name')->pluck('name', 'id');
         
         return view('erpnet-profiting-milk::production.edit',
             compact('vendors', 'categories'))->with([
