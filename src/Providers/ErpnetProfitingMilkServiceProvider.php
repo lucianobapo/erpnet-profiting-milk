@@ -10,8 +10,6 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
         \ErpNET\Profiting\Milk\Console\Commands\Install::class,
     ];
     
-    private     $projectRootDir;
-
     /**
      * Bootstrap the application services.
      *
@@ -33,7 +31,7 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
         
         $this->registerViews();
         
-        $this->mergeConfig();
+        //$this->mergeConfig();
 
     }
 
@@ -94,7 +92,7 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
      */
     private function registerTranslations()
     {
-        $langPath = $this->projectRootDir . 'resources/lang';
+        $langPath = $this->getProjectRootDir() . 'resources/lang';
         
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, 'erpnet-profiting-milk');
@@ -111,7 +109,7 @@ class ErpnetProfitingMilkServiceProvider extends ServiceProvider
     {
         $viewPath = resource_path('views/vendor/erpnet-profiting-milk');
         
-        $sourcePath = $this->projectRootDir . 'resources/views';
+        $sourcePath = $this->getProjectRootDir() . 'resources/views';
         
         $this->publishes([
             $sourcePath => $viewPath
